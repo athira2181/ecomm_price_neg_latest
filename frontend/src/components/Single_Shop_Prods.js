@@ -117,6 +117,7 @@ function Products() {
   }
 
   const deliver=(order_id)=>{
+    if(window.confirm("Are you sure you want to change status as 'Delivered'?")){
     Axios.post("http://localhost:3002/order_delivered",{
       command: "delivered",
       order_id: order_id
@@ -124,10 +125,11 @@ function Products() {
       console.log(response)
       // setNotDelivered(response.data)
       window.location.reload()
-    })
+    })}
   }
 
   const not_deliver=(order_id)=>{
+    if(window.confirm("Are you sure you want to change status as 'Delivered'?")){
     Axios.post("http://localhost:3002/order_delivered",{
       command: "not_delivered",
       order_id: order_id
@@ -135,7 +137,7 @@ function Products() {
       console.log(response)
       // setNotDelivered(response.data)
       window.location.reload()
-    })
+      })}
   }
 
   const showOrder=()=>{
@@ -151,10 +153,10 @@ function Products() {
           <th scope="col">Order No.</th>
           <th scope="col">Total Price</th>
           <th scope="col">Shipping Address</th>
-          <th scope="col">Date and Time</th>
+          <th scope="col">Order Date and Time</th>
           <th scope="col">Ordered Products</th>
-          <th scope="col" colSpan={2}>Delivered
-          <div>(Select on delivery)</div></th>
+          <th scope="col">Delivery status</th>
+          <th scope='col'>Change Delivery status</th>
           
         </tr>
       </thead>
@@ -172,7 +174,8 @@ function Products() {
               <td>{dateTime(ord.order_date)}</td>
               {/* <td>{ord.delivered}</td> */}
               <td><button className='btn btn-white' onClick={()=>localStorage.setItem('order_id',ord.order_id)}><Link to="/orderedproducts">View Details</Link></button></td>
-              <td><button className='btn btn-success' onClick={()=>deliver(ord.order_id)}>Delivered</button></td>
+              <td className='text-danger'>{ord.delivered}</td>
+              <td><button className='btn btn-success' onClick={()=>deliver(ord.order_id)}>Change Status</button></td>
             </tr >
           ))}
           {
@@ -188,8 +191,9 @@ function Products() {
               <td>{dateTime(ord.order_date)}</td>
               {/* <td>{ord.delivered}</td> */}
               <td><button className='btn btn-white' onClick={()=>localStorage.setItem('order_id',ord.order_id)}><Link to="/orderedproducts">View Details</Link></button></td>
-              <td><button className='btn btn-light' disabled>Delivered</button></td>
-              <td><button className='btn btn-danger' onClick={()=>not_deliver(ord.order_id)}>Not Delivered?</button></td>
+              {/* <td><button className='btn btn-light' disabled>Delivered</button></td> */}
+              <td className='text-success'>{ord.delivered}</td>
+              <td><button className='btn btn-danger' onClick={()=>not_deliver(ord.order_id)}>Change Status</button></td>
             </tr >
           ))}
       </tbody>
