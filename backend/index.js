@@ -427,7 +427,7 @@ app.post('/orderlist',(req,res)=>{
         
        const shop_id = req.body.shop_id
        console.log(req.body.shop_id)
-       db.query("select od.order_id,s.shop_id,od.total_price,od.ShippingAddress,od.order_date,case when od.delivered=0 then 'No' else 'Yes' end as delivered from order_details od, ordered_products op,products p, shop s where od.order_id=op.order_id and op.pid = p.pid and p.shop_id = s.shop_id and delivered=1 and s.shop_id=? order by od.order_date",[shop_id],
+       db.query("select od.order_id,s.shop_id,od.total_price,od.ShippingAddress,od.order_date,case when od.delivered=0 then 'Not Delivered' else 'Delivered' end as delivered from order_details od, ordered_products op,products p, shop s where od.order_id=op.order_id and op.pid = p.pid and p.shop_id = s.shop_id and delivered=1 and s.shop_id=? order by od.order_date",[shop_id],
        (err,result)=>{
         if(err){
             console.log(err)
@@ -438,7 +438,7 @@ app.post('/orderlist',(req,res)=>{
     }
     else if(command=="not_delivered"){
         const shop_id = req.body.shop_id
-        db.query("select od.order_id,s.shop_id,od.total_price,od.ShippingAddress,od.order_date,case when od.delivered=1 then 'Yes' else 'No' end as delivered from order_details od, ordered_products op,products p, shop s where od.order_id=op.order_id and op.pid = p.pid and p.shop_id = s.shop_id and delivered=0 and s.shop_id=? order by od.order_date",[shop_id],
+        db.query("select od.order_id,s.shop_id,od.total_price,od.ShippingAddress,od.order_date,case when od.delivered=1 then 'Delivered' else 'Not Delivered' end as delivered from order_details od, ordered_products op,products p, shop s where od.order_id=op.order_id and op.pid = p.pid and p.shop_id = s.shop_id and delivered=0 and s.shop_id=? order by od.order_date",[shop_id],
         (err,result)=>{
          if(err){
              console.log(err)
