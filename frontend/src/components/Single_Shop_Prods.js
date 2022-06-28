@@ -129,7 +129,7 @@ function Products() {
   }
 
   const not_deliver=(order_id)=>{
-    if(window.confirm("Are you sure you want to change status as 'Delivered'?")){
+    if(window.confirm("Are you sure you want to change status as 'Not Delivered'?")){
     Axios.post("http://localhost:3002/order_delivered",{
       command: "not_delivered",
       order_id: order_id
